@@ -14,7 +14,7 @@ PRIV_KEY_PATH="${SCRIPT_DIR}/keys/key-vm"
 # Client list
 clients=("192.168.1.201" "192.168.1.202" "192.168.1.203" "192.168.1.204")
 # SSH user
-userssh="vagrant"
+userssh="vagrant" # in cloud provider |root|debian|ubuntu|ec2_user|.... 
 newuser="ansible"
 pass_newuser=$(openssl rand -base64 12)
 # Read PUB_KEY_PATH
@@ -23,33 +23,57 @@ PUB_KEY=$(cat "$PUB_KEY_PATH")
 for client in "${clients[@]}"; do
     echo "Init user preparation process"
     ssh -i "$PRIV_KEY_PATH" -o StrictHostKeyChecking=no "${userssh}@${client}" bash -s <<EOF
+# Detect disctro and upgrade
+system_upgrade() {
+    echo "Init user preparation process"
+    if [ -f /etc/debian_version ]; then
+        echo "Detected debian father system, comming upgrade"
+        sudo apt update && sudo apt full-upgrade -y
+    elif [ -f /etc/redhat-release ]; then
+        echo "Detected RHEL system, comming upgrade"
+        sudo yum update && sudo yum upgrade -y
+    elif [ -f /etc/alpine-release ]; then
+        echo "Detected Alpine-based system, comming upgrade"
+        sudo apk update && sudo apk upgrade
+    elif [ -f /etc/arch-release ]; then
+        echo "Detected Arch-based system, comming upgrade"
+        sudo pacman -Syu --noconfirm
+    else
+        echo "Unsupported or unknown Linux distribution"
+        exit 1
+    fi
+}
+
 # Create ansible user if not exist
-if ! id $newuser &>/dev/null; then
-    sudo useradd -m -d /home/$newuser -s /bin/bash $newuser
-    echo "User $newuser created"
+if ! id "$newuser" &>/dev/null; then
+    sudo useradd -m -d /home/"$newuser" -s /bin/bash "$newuser"
+    echo "User "$newuser" created"
 fi
 # Create password for new user
-echo "Define a new password for $newuser"
-echo '$newuser:$pass_newuser' | sudo chpasswd
+echo "Define a new password for "$newuser""
+echo '"$newuser":$pass_newuser' | sudo chpasswd
 echo "Finish password definition"
 
 echo "Create .ssh directory for ssh configuration"
-sudo -u $newuser mkdir -p /home/$newuser/.ssh
-sudo bash -c 'echo $PUB_KEY >> /home/$newuser/.ssh/authorized_keys'
+sudo -u "$newuser" mkdir -p /home/"$newuser"/.ssh
+sudo bash -c 'echo "$PUB_KEY" >> /home/"$newuser"/.ssh/authorized_keys'
 
 echo "Secure .ssh dir"
-sudo chown $newuser:$newuser /home/$newuser/.ssh
-sudo chmod 700 /home/$newuser/.ssh
-sudo chown $newuser:$newuser /home/$newuser/.ssh/authorized_keys
-sudo chmod 600 /home/$newuser/.ssh/authorized_keys
+sudo chown "$newuser":"$newuser" /home/"$newuser"/.ssh
+sudo chmod 700 /home/"$newuser"/.ssh
+sudo chown "$newuser":"$newuser" /home/"$newuser"/.ssh/authorized_keys
+sudo chmod 600 /home/"$newuser"/.ssh/authorized_keys
 
 # Enable sudo without password for ansible user
-echo '$newuser ALL=(ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/$newuser >/dev/null
-sudo chmod 440 /etc/sudoers.d/$newuser
+echo '"$newuser" ALL=(ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/"$newuser" >/dev/null
+sudo chmod 440 /etc/sudoers.d/"$newuser"
 
+# Init upgrade process
+echo "Init upgrade process"
+system_upgrade
 EOF
     
     echo "Finish Process in $client"
-    echo "The password for $newuser is $pass_newuser. This pass is only for test"
+    echo "The password for "$newuser" is $pass_newuser. This pass is only for test"
 
 done

@@ -7,7 +7,7 @@ Vagrant.require_version ">= 1.7.0"
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box = "generic/debian10"
+  config.vm.box = "generic/debian12"
   # Disable the new default behavior introduced in Vagrant 1.7, to
   # ensure that all Vagrant machines will use the same SSH key pair.
   # See https://github.com/hashicorp/vagrant/issues/5005
