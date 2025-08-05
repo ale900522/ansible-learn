@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# NOTES:
+# This script is for prepare machine with ssh key permiting ssh connection.
 set -euo pipefail
 
 SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
