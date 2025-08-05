@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -euo pipefail
+
+SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PUB_KEY_PATH="${SCRIPT_PATH}/keys/key-vm.pub"
+
+ssh-copy-id -i "$PUB_KEY_PATH" -o StrictHostKeyChecking=no vagrant@192.168.1.201
+ssh-copy-id -i "$PUB_KEY_PATH" -o StrictHostKeyChecking=no vagrant@192.168.1.202
+ssh-copy-id -i "$PUB_KEY_PATH" -o StrictHostKeyChecking=no vagrant@192.168.1.203
+ssh-copy-id -i "$PUB_KEY_PATH" -o StrictHostKeyChecking=no vagrant@192.168.1.204
+
+./init-nodes

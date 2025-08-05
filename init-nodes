@@ -1,0 +1,50 @@
+#!/bin/bash
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PUB_KEY_PATH="${SCRIPT_DIR}/keys/key-vm.pub"
+PRIV_KEY_PATH="${SCRIPT_DIR}/keys/key-vm"
+
+# Client list
+clients=("192.168.1.201" "192.168.1.202" "192.168.1.203" "192.168.1.204")
+# SSH user
+userssh="vagrant"
+newuser="ansible"
+pass_newuser=$(openssl rand -base64 12)
+# Read PUB_KEY_PATH
+PUB_KEY=$(cat "$PUB_KEY_PATH")
+
+for client in "${clients[@]}"; do
+    echo "Init user preparation process"
+    ssh -i "$PRIV_KEY_PATH" -o StrictHostKeyChecking=no "${userssh}@${client}" bash -s <<EOF
+# Create ansible user if not exist
+if ! id $newuser &>/dev/null; then
+    sudo useradd -m -d /home/$newuser -s /bin/bash $newuser
+    echo "User $newuser created"
+fi
+# Create password for new user
+echo "Define a new password for $newuser"
+echo '$newuser:$pass_newuser' | sudo chpasswd
+echo "Finish password definition"
+
+echo "Create .ssh directory for ssh configuration"
+sudo -u $newuser mkdir -p /home/$newuser/.ssh
+sudo bash -c 'echo $PUB_KEY >> /home/$newuser/.ssh/authorized_keys'
+
+echo "Secure .ssh dir"
+sudo chown $newuser:$newuser /home/$newuser/.ssh
+sudo chmod 700 /home/$newuser/.ssh
+sudo chown $newuser:$newuser /home/$newuser/.ssh/authorized_keys
+sudo chmod 600 /home/$newuser/.ssh/authorized_keys
+
+# Enable sudo without password for ansible user
+echo '$newuser ALL=(ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/$newuser >/dev/null
+sudo chmod 440 /etc/sudoers.d/$newuser
+
+EOF
+    
+    echo "Finish Process in $client"
+    echo "The password for $newuser is $pass_newuser. This pass is only for test"
+
+done
