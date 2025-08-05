@@ -30,14 +30,13 @@ Vagrant.configure("2") do |config|
       # multicore
       v.customize ["modifyvm", :id, "--ioapic", "on"]
   end
-  #############################################LOAD-BALANCER-TEST-HAPROXY-BASIC####################################################################
+  #############################################INITIAL SERVER CONFIG####################################################################
 
    # Application server-00.
    config.vm.define "server00" do |server00|
     server00.vm.hostname = "srv-server-00"
     server00.vm.network :public_network, :bridge=>"enp5s0", ip: "192.168.1.201", hostname: true
     server00.vm.network :private_network, ip: "192.168.56.5"
-    # server00.vm.network "forwarded_port", guest: 22, host: "2293" #permitir conexion ssh desde otro dispositivo
 
   end
   # Application server-01.
@@ -45,8 +44,6 @@ Vagrant.configure("2") do |config|
     server01.vm.hostname = "srv-server-01"
     server01.vm.network :public_network, :bridge=>"enp5s0", ip: "192.168.1.202", hostname: true
     server01.vm.network :private_network, ip: "192.168.56.6"
-    # server01.vm.network "forwarded_port", guest: 80, host: 8000 #permitir conexion ssh desde otro dispositivo
-    # server01.vm.network "forwarded_port", guest: 443, host: "8443"
 
   end
 
@@ -55,7 +52,6 @@ Vagrant.configure("2") do |config|
     server02.vm.hostname = "srv-server-02"
     server02.vm.network :public_network, :bridge=>"enp5s0", ip: "192.168.1.203", hostname: true
     server02.vm.network :private_network, ip: "192.168.56.7"
-    # server02.vm.network "forwarded_port", guest: 22, host: "2294" #permitir conexion ssh desde otro dispositivo
  end
 
    # Application server-03.
@@ -63,7 +59,6 @@ Vagrant.configure("2") do |config|
     server03.vm.hostname = "srv-server-03"
     server03.vm.network :public_network, :bridge=>"enp5s0", ip: "192.168.1.204", hostname: true
     server03.vm.network :private_network, ip: "192.168.56.8"
-    # server03.vm.network "forwarded_port", guest: 22, host: "2293" #permitir conexion ssh desde otro dispositivo
 
   end
 ####################################################################################################3333
