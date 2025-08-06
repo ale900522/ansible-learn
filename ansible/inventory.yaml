@@ -1,7 +1,12 @@
 # Grupo raíz obligatorio que engloba todos los hosts y grupos
 all:
-  children:
+  hosts:
+    # Se agrega directamente el nombre de los hosts y las propiedades para la conexion.
+    server00: # Esta maquina la he dejado fuera de los grupos porque tambien es posible tener maquinas sin agrupar.
+      ansible_user: ansible
+      ansible_ssh_private_key_file: ../keys/key-vm
 
+  children:
     # Primer grupo de servidores virtuales creados con Vagrant
     cluster_servers:
       vars:
