@@ -3,7 +3,7 @@ all:
   children:
 
     # Primer grupo de servidores virtuales creados con Vagrant
-    first_servers_for_learn_vagrant:
+    cluster_servers:
       vars:
         # Usuario SSH que se usará para conectarse a las máquinas
         ansible_user: ansible
@@ -11,20 +11,31 @@ all:
         ansible_ssh_private_key_file: ../keys/key-vm
       hosts:
         # Alias del host dentro del inventario (puede ser cualquier nombre lógico)
-        server00:
+        cluster_server_01:
           # Dirección IP o nombre DNS real al que se conecta Ansible
-          ansible_host: 192.168.1.201
-        server01:
-          ansible_host: 192.168.1.202
+          ansible_host: server00
+        cluster_server_02:
+          ansible_host: server01
 
     # Segundo grupo de servidores, también para aprendizaje con Vagrant.
-    # Este segundo grupo no es estrictamente necesario, solo lo agregue asi por motivos didacticos.
-    second_servers_for_learn_vagrant:
+    # Este segundo grupo no es estrictamente necesario, solo lo agregue aqui por motivos didacticos.
+    app_server:
       vars:
         ansible_user: ansible
         ansible_ssh_private_key_file: ../keys/key-vm
       hosts:
-        server02:
-          ansible_host: 192.168.1.203
-        server03:
-          ansible_host: 192.168.1.204
+        app_server_01:
+          ansible_host: server02
+        app_server_02:
+          ansible_host: server03
+    # Tercer grupo de servidores, también para aprendizaje con Vagrant.
+    # Este grupo no es estrictamente necesario, solo lo agregue aqui por motivos didacticos con el objetivo de que se entienda todas las formas que se puede configurar el inventario.
+    data_servers:
+      vars:
+        ansible_user: ansible
+        ansible_ssh_private_key_file: ../keys/key-vm
+      hosts:
+        data_server_01:
+          ansible_host: server00
+        data_server_02:
+          ansible_host: server03 
