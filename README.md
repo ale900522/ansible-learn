@@ -73,17 +73,17 @@ vagrant destroy -f && vagrant up
 ## Project Structure
 
 ```
-├── Vagrantfile          # Defines VM count, networking, and Ansible provisioner
+├── Vagrantfile           # Defines VM count, networking, and Ansible provisioner
 ├── ansible/
-│   ├── inventory.ini    # Vagrant-generated inventory for Ansible
-│   ├── playbook.yml     # Main playbook to configure all nodes
-│   └── roles/           # Directory for Ansible roles
+│   ├── inventory.yaml    # Vagrant-generated inventory for Ansible
+│   ├── playbook.yml      # Main playbook to configure all nodes
+│   └── roles/            # Directory for Ansible roles
 │       └── example_role/
 │           ├── tasks/
 │           └── templates/
-├── init-nodes           # Script to prepare VMs before provisioning
-├── ssh-copy             # Script to copy SSH keys and finalize VM setup
-└── README.md            # Project documentation
+├── init-nodes            # Script to prepare VMs before provisioning
+├── ssh-copy              # Script to copy SSH keys and finalize VM setup
+└── README.md             # Project documentation
 ```
 
 ## Helper Scripts

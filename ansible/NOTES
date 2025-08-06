@@ -1,0 +1,11 @@
+# ¿Qué permite esta estructura?
+#   - Organizar tus hosts por grupo (por ejemplo, por entorno, propósito o batch de Vagrant).
+#   - Definir variables comunes por grupo (como ansible_user o la clave SSH), lo cual evita duplicación.
+#   - Poder ejecutar comandos o playbooks en grupos individuales, por ejemplo:
+
+## ansible -i inventory.yaml all -m ping # ping a todos los servidores definidos en el inventario
+## ansible -i inventory.yaml first_servers_for_learn_vagrant -m ping  # ping al grupo de servidores 'first_servers_for_learn_vagrant'
+## ansible -i inventory.yaml second_servers_for_learn_vagrant -m ping # ping al grupo de servidores 'second_servers_for_learn_vagrant'
+## ansible -i inventory.yaml server00 -m ping # ping al servidor 'server00' unicamente
+
+# En este punto el playbook aun esta vacio y los comandos lanzados son comando 'Ad-Hoc' de ansible

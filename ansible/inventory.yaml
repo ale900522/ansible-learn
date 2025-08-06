@@ -1,0 +1,30 @@
+# Grupo raíz obligatorio que engloba todos los hosts y grupos
+all:
+  children:
+
+    # Primer grupo de servidores virtuales creados con Vagrant
+    first_servers_for_learn_vagrant:
+      vars:
+        # Usuario SSH que se usará para conectarse a las máquinas
+        ansible_user: ansible
+        # Ruta a la clave privada SSH para autenticarse sin contraseña
+        ansible_ssh_private_key_file: ../keys/key-vm
+      hosts:
+        # Alias del host dentro del inventario (puede ser cualquier nombre lógico)
+        server00:
+          # Dirección IP o nombre DNS real al que se conecta Ansible
+          ansible_host: 192.168.1.201
+        server01:
+          ansible_host: 192.168.1.202
+
+    # Segundo grupo de servidores, también para aprendizaje con Vagrant.
+    # Este segundo grupo no es estrictamente necesario, solo lo agregue asi por motivos didacticos.
+    second_servers_for_learn_vagrant:
+      vars:
+        ansible_user: ansible
+        ansible_ssh_private_key_file: ../keys/key-vm
+      hosts:
+        server02:
+          ansible_host: 192.168.1.203
+        server03:
+          ansible_host: 192.168.1.204

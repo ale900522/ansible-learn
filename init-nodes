@@ -23,27 +23,6 @@ PUB_KEY=$(cat "$PUB_KEY_PATH")
 for client in "${clients[@]}"; do
     echo "Init user preparation process"
     ssh -i "$PRIV_KEY_PATH" -o StrictHostKeyChecking=no "${userssh}@${client}" bash -s <<EOF
-# Detect disctro and upgrade
-system_upgrade() {
-    echo "Init user preparation process"
-    if [ -f /etc/debian_version ]; then
-        echo "Detected debian father system, comming upgrade"
-        sudo apt update && sudo apt full-upgrade -y
-    elif [ -f /etc/redhat-release ]; then
-        echo "Detected RHEL system, comming upgrade"
-        sudo yum update && sudo yum upgrade -y
-    elif [ -f /etc/alpine-release ]; then
-        echo "Detected Alpine-based system, comming upgrade"
-        sudo apk update && sudo apk upgrade
-    elif [ -f /etc/arch-release ]; then
-        echo "Detected Arch-based system, comming upgrade"
-        sudo pacman -Syu --noconfirm
-    else
-        echo "Unsupported or unknown Linux distribution"
-        exit 1
-    fi
-}
-
 # Create ansible user if not exist
 if ! id "$newuser" &>/dev/null; then
     sudo useradd -m -d /home/"$newuser" -s /bin/bash "$newuser"
@@ -65,12 +44,9 @@ sudo chown "$newuser":"$newuser" /home/"$newuser"/.ssh/authorized_keys
 sudo chmod 600 /home/"$newuser"/.ssh/authorized_keys
 
 # Enable sudo without password for ansible user
-echo '"$newuser" ALL=(ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/"$newuser" >/dev/null
+echo '$newuser ALL=(LL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/"$newuser" >/dev/null
 sudo chmod 440 /etc/sudoers.d/"$newuser"
 
-# Init upgrade process
-echo "Init upgrade process"
-system_upgrade
 EOF
     
     echo "Finish Process in $client"
