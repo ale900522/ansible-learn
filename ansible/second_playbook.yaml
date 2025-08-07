@@ -1,0 +1,6 @@
+---
+# Recuerden: Se pueden enviar la ejecucion de modulos hacia todos los grupos de servidores definidos en el inventario.
+- hosts: all
+  become: true
+  roles:
+    - { role: common-app, tags: ["commonapp"] }

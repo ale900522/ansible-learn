@@ -1,0 +1,15 @@
+applications:
+  - apt-transport-https
+  - mc
+  - mtr-tiny
+  - nano  
+  - ca-certificates
+  - curl
+  - git
+  - htop
+  - iproute2
+  - vim
+  - python3-docker
+  - nfs-common
+  - nfs-kernel-server
+  - ufw

@@ -18,7 +18,7 @@ all:
         # Alias del host dentro del inventario (puede ser cualquier nombre lógico)
         cluster_server_01:
           # Dirección IP o nombre DNS real al que se conecta Ansible
-          ansible_host: server01
+          ansible_host: server00
         cluster_server_02:
           ansible_host: server01
 
