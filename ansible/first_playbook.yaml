@@ -1,0 +1,19 @@
+---
+# Se pueden enviar la ejecucion de modulos hacia todos los grupos de servidores definidos en el inventario.
+- hosts: all
+  become: false
+  roles:
+    - { role: ping, tags: ["ping"] }
+
+
+# Se pueden enviar la ejecucion de modulos hacia uno o mas grupos de servidores definidos en el inventario.
+- hosts: cluster_servers
+  become: false
+  roles:
+    - { role: ping, tags: ["ping"] }
+
+# Se pueden enviar la ejecucion de modulos hacia un servidor especifico definido en el inventario.
+- hosts: cluster_server_01
+  become: false
+  roles:
+    - { role: ping, tags: ["ping"] }

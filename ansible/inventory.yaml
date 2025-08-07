@@ -2,7 +2,7 @@
 all:
   hosts:
     # Se agrega directamente el nombre de los hosts y las propiedades para la conexion.
-    server00: # Esta maquina la he dejado fuera de los grupos porque tambien es posible tener maquinas sin agrupar.
+    server06: # Esta maquina la he dejado fuera de los grupos porque tambien es posible tener maquinas sin agrupar.
       ansible_user: ansible
       ansible_ssh_private_key_file: ../keys/key-vm
 
@@ -18,7 +18,7 @@ all:
         # Alias del host dentro del inventario (puede ser cualquier nombre lógico)
         cluster_server_01:
           # Dirección IP o nombre DNS real al que se conecta Ansible
-          ansible_host: server00
+          ansible_host: server01
         cluster_server_02:
           ansible_host: server01
 
@@ -41,6 +41,6 @@ all:
         ansible_ssh_private_key_file: ../keys/key-vm
       hosts:
         data_server_01:
-          ansible_host: server00
+          ansible_host: server04
         data_server_02:
-          ansible_host: server03 
+          ansible_host: server05 

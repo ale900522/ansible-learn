@@ -12,7 +12,16 @@ PUB_KEY_PATH="${SCRIPT_DIR}/keys/key-vm.pub"
 PRIV_KEY_PATH="${SCRIPT_DIR}/keys/key-vm"
 
 # Client list
-clients=("192.168.1.201" "192.168.1.202" "192.168.1.203" "192.168.1.204")
+clients=(
+    "192.168.1.200" 
+    "192.168.1.201" 
+    "192.168.1.202" 
+    "192.168.1.203"
+    "192.168.1.204" 
+    "192.168.1.205" 
+    "192.168.1.206"
+)
+
 # SSH user
 userssh="vagrant" # in cloud provider |root|debian|ubuntu|ec2_user|.... 
 newuser="ansible"
@@ -44,12 +53,11 @@ sudo chown "$newuser":"$newuser" /home/"$newuser"/.ssh/authorized_keys
 sudo chmod 600 /home/"$newuser"/.ssh/authorized_keys
 
 # Enable sudo without password for ansible user
-echo '$newuser ALL=(LL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/"$newuser" >/dev/null
+echo '$newuser ALL=(ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/"$newuser" >/dev/null
 sudo chmod 440 /etc/sudoers.d/"$newuser"
 
 EOF
     
     echo "Finish Process in $client"
-    echo "The password for "$newuser" is $pass_newuser. This pass is only for test"
-
 done
+echo "The password for "$newuser" is $pass_newuser. This pass is only for test"

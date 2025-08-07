@@ -35,14 +35,14 @@ Vagrant.configure("2") do |config|
    # Application server-00.
    config.vm.define "server00" do |server00|
     server00.vm.hostname = "srv-server-00"
-    server00.vm.network :public_network, :bridge=>"enp5s0", ip: "192.168.1.201", hostname: true
+    server00.vm.network :public_network, :bridge=>"enp5s0", ip: "192.168.1.200", hostname: true
     server00.vm.network :private_network, ip: "192.168.56.5"
 
   end
   # Application server-01.
   config.vm.define "server01" do |server01|
     server01.vm.hostname = "srv-server-01"
-    server01.vm.network :public_network, :bridge=>"enp5s0", ip: "192.168.1.202", hostname: true
+    server01.vm.network :public_network, :bridge=>"enp5s0", ip: "192.168.1.201", hostname: true
     server01.vm.network :private_network, ip: "192.168.56.6"
 
   end
@@ -50,15 +50,37 @@ Vagrant.configure("2") do |config|
    # Application server-02.
   config.vm.define "server02" do |server02|
     server02.vm.hostname = "srv-server-02"
-    server02.vm.network :public_network, :bridge=>"enp5s0", ip: "192.168.1.203", hostname: true
+    server02.vm.network :public_network, :bridge=>"enp5s0", ip: "192.168.1.202", hostname: true
     server02.vm.network :private_network, ip: "192.168.56.7"
  end
 
    # Application server-03.
   config.vm.define "server03" do |server03|
     server03.vm.hostname = "srv-server-03"
-    server03.vm.network :public_network, :bridge=>"enp5s0", ip: "192.168.1.204", hostname: true
+    server03.vm.network :public_network, :bridge=>"enp5s0", ip: "192.168.1.203", hostname: true
     server03.vm.network :private_network, ip: "192.168.56.8"
+
+  end
+  # Application server-04.
+  config.vm.define "server04" do |server04|
+    server04.vm.hostname = "srv-server-04"
+    server04.vm.network :public_network, :bridge=>"enp5s0", ip: "192.168.1.204", hostname: true
+    server04.vm.network :private_network, ip: "192.168.56.9"
+
+  end
+
+   # Application server-05.
+  config.vm.define "server05" do |server05|
+    server05.vm.hostname = "srv-server-05"
+    server05.vm.network :public_network, :bridge=>"enp5s0", ip: "192.168.1.205", hostname: true
+    server05.vm.network :private_network, ip: "192.168.56.10"
+ end
+
+   # Application server-06.
+  config.vm.define "server06" do |server06|
+    server06.vm.hostname = "srv-server-06"
+    server06.vm.network :public_network, :bridge=>"enp5s0", ip: "192.168.1.206", hostname: true
+    server06.vm.network :private_network, ip: "192.168.56.11"
 
   end
 ####################################################################################################3333

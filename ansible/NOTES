@@ -10,3 +10,43 @@
 ## ansible -i inventory.yaml second_servers_for_learn_vagrant -m ping # ping al grupo de servidores 'second_servers_for_learn_vagrant'
 ## ansible -i inventory.yaml server00 -m ping # ping al servidor 'server00' unicamente
 
+# Vamos a explicar aqui cual el flujo de trabajo para la ejecucion de un nuevo role:
+
+## [ Usuario ejecuta ]
+##         |
+##         v
+## ansible-playbook first_playbook.yaml
+##         |
+##         v
+## +--------------------------+
+## |    first_playbook.yaml   |
+## +--------------------------+
+## | - Define "hosts: all"    |
+## | - Llama a "roles: ping"  |
+## +--------------------------+
+##         |
+##         v
+## +-----------------------------+
+## |   inventory.yaml            |
+## +-----------------------------+
+## | - Lista de hosts o grupos   |
+## | - Variables de conexión     |
+## |   (user, key, IP, etc.)     |
+## +-----------------------------+
+##         |
+##         v
+## +------------------------------+
+## |   roles/ping/tasks/main.yaml |
+## +------------------------------+
+## | - Lista de tareas YAML       |
+## |   (ej: usar módulo ping)     |
+## +------------------------------+
+##         |
+##         v
+## +------------------------------+
+## |     Tareas ejecutadas en     |
+## |   cada host del inventario   |
+## +------------------------------+
+
+# Tener presente que el inventario ya esta definido en el inventory.yaml y que ansible.cfg ya sabe donde encontrar ese inventario,
+# por tanto no hay que pasar en la orden ansible-playbook el inventario.
