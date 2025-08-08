@@ -1,8 +1,8 @@
-applications:
+deb_applications:
   - apt-transport-https
   - mc
   - mtr-tiny
-  - nano  
+  - nano
   - ca-certificates
   - curl
   - git
@@ -13,3 +13,15 @@ applications:
   - nfs-common
   - nfs-kernel-server
   - ufw
+
+rpm_applications:
+  - mc
+  - nano
+  - vim-enhanced
+  - nano
+  - ca-certificates
+  - curl
+  - git
+  - iproute
+  - nfs-utils
+  - firewalld

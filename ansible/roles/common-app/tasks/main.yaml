@@ -1,65 +1,29 @@
+#update system packages#
 - name: Update system packages Debian/Ubuntu
   apt:
     update_cache: yes
     upgrade: dist
   when: ansible_os_family == "Debian"
 
-- name: Update system packages RHEL/CentOS
-  yum:
+- name: Update packages on RHEL/Rocky/Alma
+  dnf:
     name: '*'
     state: latest
   when: ansible_os_family == "RedHat"
 
-- name: Update system packages Fedora
-  dnf:
-    name: '*'
-    state: latest
-  when: ansible_distribution == "Fedora"
-
-- name: Update system packages Alpine
-  community.general.apk:
-    upgrade: yes
-  when: ansible_os_family == "Alpine"
-
-- name: Update system packages Arch
-  community.general.pacman:
-    update_cache: yes
-    upgrade: yes
-  when: ansible_distribution == "Archlinux"
-##
+#install common packages#
 - name: Packages Install on Debian/Ubuntu
   ansible.builtin.apt:
     name: "{{ item }}"
     state: present
     install_recommends: no
     autoclean: yes
-  loop: "{{ applications }}"
+  loop: "{{ deb_applications }}"
   when: ansible_os_family == "Debian"
 
 - name: Update system packages RHEL/CentOS
-  ansible.builtin.yum:
-    name: "{{ item }}"
-    state: present
-  loop: "{{ applications }}"
-  when: ansible_os_family == "RedHat"
-
-- name: Update system packages Fedora
   ansible.builtin.dnf:
     name: "{{ item }}"
     state: present
-  loop: "{{ applications }}"
-  when: ansible_distribution == "Fedora"
-
-- name: Update system packages Alpine
-  community.general.apk:
-    name: "{{ item }}"
-    state: present
-  loop: "{{ applications }}"
-  when: ansible_os_family == "Alpine"
-
-- name: Update system packages Arch
-  community.general.pacman:
-    name: "{{ item }}"
-    state: present
-  loop: "{{ applications }}"  
-  when: ansible_distribution == "Archlinux"
+  loop: "{{ rpm_applications }}"
+  when: ansible_os_family == "RedHat"

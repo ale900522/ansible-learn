@@ -105,3 +105,14 @@
 ##                ┌─────────────────────────────┐
 ##                │ Fin de la tarea "Install"   │
 ##                └─────────────────────────────┘
+
+## # Hoy les he actualizado la version de install and update #
+## Para la misma he actualizado las tareas de instalacion basado en el tipo de distro que esta instalada, solo he puesto 2 distros
+## debian y rockylinux, les dejo de tarea para practicas como hacerlo teniendo 5 distribuciones instaladas en su stack de servidores,
+## esto no es lo mas comun pero puede suceder.
+## Para saber como detectar si es debian o ubuntu o rhel o rocky ejecutar en consola como comando Ad-Hoc
+## "ansible all -m setup -a "filter=ansible_os_family""
+## Teniendo en cuenta que las familias de distribuciones usan los mismos gestores de paquetes se puede llevar a cabo la implementacion:
+## Ejemplo:
+## Rhel --> yum y dnf por tanto si esta es la distro padre detectada: rockylinux fedora centos etc etc usaran estos gestores de paquetes yum o dnf
+## debian --> apt por tanto si esta es la distro padre detectada: ubuntu linux-mint debian usaran este gestor de paquetes apt
