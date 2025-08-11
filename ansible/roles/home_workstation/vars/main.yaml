@@ -1,0 +1,29 @@
+# Notes:
+  # - List the applications you need for your workstation.
+  # - Get the source for each app you want to install.
+  # - Implement a role for each application step by step.
+  # - The idea here is to create a task for each application and call them from one centralized entry point.
+  # - Today We learned about Ansible task dependencies, such as having one main.yaml call other .yaml files with more tasks.
+---
+homeapps:
+  deb:
+    - vim
+    - nano
+    - htop
+    - git
+    - net-tools
+  arch:
+    - vim
+    - nano
+    - htop
+    - git
+    - inetutils
+  k8sclientapi:
+    - kubectl
+  kubectlversion: "v1.31.0"
+  fluxcli:
+    - fluxcd
+  devapp:
+    - vscode
+  browser:
+    - brave

@@ -1,0 +1,11 @@
+- name: Install common applications on Debian
+  ansible.builtin.package:
+    name: "{{ homeapps.deb }}"
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Install common applications on Arch
+  ansible.builtin.package:
+    name: "{{ homeapps.arch }}"
+    state: present
+  when: ansible_os_family == "Archlinux"

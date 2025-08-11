@@ -1,6 +1,9 @@
 # Grupo raíz obligatorio que engloba todos los hosts y grupos
 all:
   hosts:
+    homeworkstation:
+      ansible_connection: local
+
     # Se agrega directamente el nombre de los hosts y las propiedades para la conexion.
     server04: # Esta maquina la he dejado fuera de los grupos porque tambien es posible tener maquinas sin agrupar.
       ansible_user: ansible

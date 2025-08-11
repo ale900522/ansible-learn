@@ -1,0 +1,5 @@
+- name: Install common app
+  ansible.builtin.include_tasks: common.yaml
+
+- name: Install kubectl client api k8s
+  ansible.builtin.include_tasks: kubectl.yaml
