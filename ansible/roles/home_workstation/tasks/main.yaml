@@ -3,3 +3,9 @@
 
 - name: Install kubectl client api k8s
   ansible.builtin.include_tasks: kubectl.yaml
+
+- name: Install fluxcd client
+  ansible.builtin.include_tasks: fluxcd.yaml
+
+- name: Install Brave-Browser
+  ansible.builtin.include_tasks: brave.yaml

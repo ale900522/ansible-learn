@@ -1,4 +1,0 @@
---- 
-  tasks:
-    - name: Make a ping to all machine
-      ansible.builtin.ping:

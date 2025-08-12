@@ -1,6 +1,3 @@
-# For install kubectl we use diffent modules  and build some paramenters
-  # - Get processor architecture
-  # - 
 - name: kubectl architecture from ansible_architecture
   ansible.builtin.set_fact:
     kubectl_arch: >-
@@ -18,14 +15,14 @@
 
 - name: Fetch kubectl sha256 checksum
   ansible.builtin.uri:
-    url: "https://dl.k8s.io/release/{{ homeapps.kubectlversion }}/bin/linux/{{ kubectl_arch }}/kubectl.sha256"
+    url: "https://dl.k8s.io/release/{{ worksapps.k8svers }}/bin/linux/{{ kubectl_arch }}/kubectl.sha256"
     follow_redirects: all
     return_content: true
   register: kubectl_sha256
 
 - name: Install kubectl client api for kubernetes
   ansible.builtin.get_url:
-    url: "https://dl.k8s.io/release/{{ homeapps.kubectlversion }}/bin/linux/{{ kubectl_arch }}/kubectl"
-    dest: /tmp/kubectl
+    url: "https://dl.k8s.io/release/{{ worksapps.k8svers }}/bin/linux/{{ kubectl_arch }}/kubectl"
+    dest: /usr/local/bin/kubectl
     mode: '0755'
     checksum: "sha256:{{ kubectl_sha256.content | trim }}"

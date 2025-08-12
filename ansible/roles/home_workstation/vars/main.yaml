@@ -5,12 +5,13 @@
   # - The idea here is to create a task for each application and call them from one centralized entry point.
   # - Today We learned about Ansible task dependencies, such as having one main.yaml call other .yaml files with more tasks.
 ---
-homeapps:
+worksapps:
   deb:
     - vim
     - nano
     - htop
     - git
+    - gedit
     - net-tools
   arch:
     - vim
@@ -18,11 +19,11 @@ homeapps:
     - htop
     - git
     - inetutils
-  k8sclientapi:
-    - kubectl
-  kubectlversion: "v1.31.0"
-  fluxcli:
-    - fluxcd
+    - yay
+    - fakeroot
+    - base-devel
+  k8svers: "v1.31.0"
+  fluxcliversion: "2.0.0"
   devapp:
     - vscode
   browser:

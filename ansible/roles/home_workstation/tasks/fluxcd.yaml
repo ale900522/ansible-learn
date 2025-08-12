@@ -1,0 +1,25 @@
+- name: Install fluxcd on windows
+  win_chocolatey:
+    name: flux
+    version: "{{ worksapps.fluxcliversion }}"
+    state: present
+  when: ansible_system == "Win32NT"
+
+- name: Install fluxcd on macOS
+  community.general.homebrew:
+    name: fluxcd/tap/flux
+  when: ansible_system == "Darwin"
+
+- name: Download fluxcd for Linux and save in /tmp
+  ansible.builtin.get_url:
+    url: "https://fluxcd.io/install.sh"
+    dest: /tmp/install.sh
+    mode: '0755'
+  when: ansible_system == "Linux"
+
+- name: Install fluxcd on linux using bash
+  ansible.builtin.shell: | 
+    FLUX_VERSION={{ worksapps.fluxcliversion }} /tmp/install.sh
+  args:
+    creates: /usr/local/bin/flux
+  when: ansible_system == "Linux"
