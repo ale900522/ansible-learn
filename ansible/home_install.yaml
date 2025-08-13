@@ -1,0 +1,7 @@
+- name: Setup workstation
+  hosts: homeworkstation
+  connection: local
+  # become: true
+  gather_facts: true
+  roles:
+    - { role: home_workstation, tags: ["home_workstation"] }
