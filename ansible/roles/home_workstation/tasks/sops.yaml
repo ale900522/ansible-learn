@@ -12,7 +12,7 @@
 
 - name: "Sops | Download binary"
   ansible.builtin.get_url: 
-    url: "https://github.com/getsops/sops/releases/download/v3.10.2/sops-v3.10.2.linux.amd64"
+    url: "https://github.com/getsops/sops/releases/download/{{ worksapps.sopsvers }}/sops-{{ worksapps.sopsvers }}.linux.amd64"
     dest: /usr/local/bin/sops
     mode: '0755'
   when: computer_arch == "amd64" and not (sopsbin.stat.exists | default(false))
