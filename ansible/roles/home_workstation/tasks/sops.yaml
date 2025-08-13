@@ -1,0 +1,18 @@
+# Installation method from https://github.com/getsops/sops/releases
+- block:
+    - name: "Sops | Get installation path with command"
+      ansible.builtin.shell: command -v sops
+      failed_when: false
+      changed_when: false
+      register: sopscmd
+    - name: "Sops | Check install"
+      ansible.builtin.stat:
+        path: "{{ sopscmd.stdout }}"
+      register: sopsbin
+
+- name: "Sops | Download binary"
+  ansible.builtin.get_url: 
+    url: "https://github.com/getsops/sops/releases/download/v3.10.2/sops-v3.10.2.linux.amd64"
+    dest: /usr/local/bin/sops
+    mode: '0755'
+  when: computer_arch == "amd64" and not (sopsbin.stat.exists | default(false))

@@ -1,0 +1,14 @@
+- name: Computer architecture from ansible_architecture
+  ansible.builtin.set_fact:
+    computer_arch: >-
+      {{ 'amd64' if ansible_architecture in ['x86_64','amd64'] else
+         'arm64' if ansible_architecture in ['aarch64','arm64'] else
+         '386'   if ansible_architecture in ['i386','i686'] else
+         ansible_architecture }}
+
+- name: Assert suported computer_arch
+  ansible.builtin.assert:
+    that:
+      - "computer_arch in ['x86_64', 'amd64', 'arm64']"
+    fail_msg: "Unsupported computer_arch={{ computer_arch }} from ansible_architecture={{ ansible_architecture }}"
+    success_msg: "Kubectl architecture is supported, architecture detected is {{ computer_arch }} and ansible architecture detected is {{ ansible_architecture }}"
