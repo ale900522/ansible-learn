@@ -1,3 +1,6 @@
+- name: Get compute arch for other tasks
+  ansible.builtin.include_tasks: mapsfact.yaml
+
 - name: Install common app
   ansible.builtin.include_tasks: common.yaml
 
@@ -12,3 +15,6 @@
 
 - name: Install Brave-Browser
   ansible.builtin.include_tasks: vscode.yaml
+
+- name: Install Sops
+  ansible.builtin.include_tasks: sops.yaml

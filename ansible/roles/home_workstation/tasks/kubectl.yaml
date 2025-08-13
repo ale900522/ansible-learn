@@ -1,28 +1,13 @@
-- name: kubectl architecture from ansible_architecture
-  ansible.builtin.set_fact:
-    kubectl_arch: >-
-      {{ 'amd64' if ansible_architecture in ['x86_64','amd64'] else
-         'arm64' if ansible_architecture in ['aarch64','arm64'] else
-         '386'   if ansible_architecture in ['i386','i686'] else
-         ansible_architecture }}
-
-- name: Assert suported kubectl_arch
-  ansible.builtin.assert:
-    that:
-      - "kubectl_arch in ['x86_64', 'amd64', 'arm64']"
-    fail_msg: "Unsupported kubectl_arch={{ kubectl_arch }} from ansible_architecture={{ ansible_architecture }}"
-    success_msg: "Kubectl architecture is supported, architecture detected is {{ kubectl_arch }} and ansible architecture detected is {{ ansible_architecture }}"
-
 - name: Fetch kubectl sha256 checksum
   ansible.builtin.uri:
-    url: "https://dl.k8s.io/release/{{ worksapps.k8svers }}/bin/linux/{{ kubectl_arch }}/kubectl.sha256"
+    url: "https://dl.k8s.io/release/{{ worksapps.k8svers }}/bin/linux/{{ computer_arch }}/kubectl.sha256"
     follow_redirects: all
     return_content: true
   register: kubectl_sha256
 
 - name: Install kubectl client api for kubernetes
   ansible.builtin.get_url:
-    url: "https://dl.k8s.io/release/{{ worksapps.k8svers }}/bin/linux/{{ kubectl_arch }}/kubectl"
+    url: "https://dl.k8s.io/release/{{ worksapps.k8svers }}/bin/linux/{{ computer_arch }}/kubectl"
     dest: /usr/local/bin/kubectl
     mode: '0755'
     checksum: "sha256:{{ kubectl_sha256.content | trim }}"
