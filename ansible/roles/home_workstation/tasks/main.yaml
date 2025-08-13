@@ -9,3 +9,6 @@
 
 - name: Install Brave-Browser
   ansible.builtin.include_tasks: brave.yaml
+
+- name: Install Brave-Browser
+  ansible.builtin.include_tasks: vscode.yaml

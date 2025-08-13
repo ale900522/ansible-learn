@@ -1,0 +1,24 @@
+- block:
+    - name: "Visual Studio Code | Get installation path with which"
+      ansible.builtin.shell: command -v code
+      failed_when: false
+      changed_when: false
+      register: codecmd
+    - name: "Visual Studio Code | Check if is install"
+      ansible.builtin.stat:
+        path: "{{ codecmd.stdout }}"
+      register: codebin
+      #debug for output test#
+    - name: Debug
+      ansible.builtin.debug:
+        msg: "codebin.stat.islnk= {{ codebin.stat.islnk }}" # Is used for symbolic link
+    - name: Debug Exist
+      ansible.builtin.debug:
+        msg: "codebin.stat.exists value = {{ codebin.stat.exists }}" # For evaluate if path exist
+      #debug for output test#
+    - name: "Visual Studio Code | Install with AUR helper 'yay'"
+      ansible.builtin.command: yay -S --noconfirm --needed code
+      become: false
+      when: not (codebin.stat.exists | default(false))
+  when: 
+   - ansible_os_family == "Archlinux" 

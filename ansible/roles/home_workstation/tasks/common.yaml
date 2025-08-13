@@ -4,6 +4,21 @@
     state: present
   when: ansible_os_family == "Debian"
 
+- block:
+    # 1) Allow to current user don't ask for password for root
+    - name: "Sudoers | pacman sin password para el usuario actual"
+      ansible.builtin.copy:
+        dest: /etc/sudoers.d/ale
+        content: "ale ALL=(ALL) NOPASSWD: /usr/bin/pacman\n"
+        mode: "0440"
+        validate: "visudo -cf %s"
+      become: true
+    - name: Full system upgrade
+      community.general.pacman:
+        update_cache: true
+        upgrade: true
+  when: ansible_os_family == "Archlinux"
+
 - name: Install common applications on Arch
   ansible.builtin.package:
     name: "{{ worksapps.arch }}"
