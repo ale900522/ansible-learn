@@ -26,6 +26,11 @@ worksapps:
     - gnupg
     - make
     - telegram-desktop
+    - wireguard-tools
+    - openresolv
+    - resolvconf
+    - k9s
+    - keepassxc
   archyay:
     - whatsie
   k8svers: "v1.31.0"
