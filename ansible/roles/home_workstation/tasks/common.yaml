@@ -24,3 +24,9 @@
     name: "{{ worksapps.arch }}"
     state: present
   when: ansible_os_family == "Archlinux"
+
+- name: Install common applications on Arch with yay
+  ansible.builtin.command: yay -S --noconfirm --needed {{ item }}
+  become: false
+  loop: "{{ worksapps.archyay }}"
+  when: ansible_os_family == "Archlinux"
