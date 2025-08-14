@@ -24,6 +24,7 @@ worksapps:
     - base-devel
     - wget
     - gnupg
+    - make
   k8svers: "v1.31.0"
   fluxcliversion: "2.0.0"
   sopsvers: v3.10.2
